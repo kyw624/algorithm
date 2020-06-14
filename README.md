@@ -14,10 +14,13 @@ Python3 (PyPy3)
 
 > 클릭 시 해당 사이트로 이동됩니다.
 
-1. [CodeUp](https://codeup.kr/index.php)
-   - [기초 100제](https://codeup.kr/problemsetsol.php?psid=23)
-2. [BOJ](https://www.acmicpc.net/)
-   - [Bronze](https://www.acmicpc.net/workbook/view/2784)
-   - [Silver](https://www.acmicpc.net/workbook/view/2781)
-   - [Gold](https://www.acmicpc.net/workbook/view/2782)
-   - [Platinum](https://www.acmicpc.net/workbook/view/2783)
+### **1. [CodeUp](https://codeup.kr/index.php)**
+
+- [기초 100제](https://codeup.kr/problemsetsol.php?psid=23)
+
+### **2. [BOJ](https://www.acmicpc.net/)**
+
+- [Bronze](https://www.acmicpc.net/workbook/view/2784)
+- [Silver](https://www.acmicpc.net/workbook/view/2781)
+- [Gold](https://www.acmicpc.net/workbook/view/2782)
+- [Platinum](https://www.acmicpc.net/workbook/view/2783)
