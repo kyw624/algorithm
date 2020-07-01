@@ -1,17 +1,15 @@
 # 30
 
 N = input()
+answer = ''
 
 if '0' not in N:
-    print(-1)
-
+    answer = -1
 else:
-    txt = 0
-    for i in N:
-        txt += int(i)
+    for i in sorted(N, reverse=True):
+        answer += i
+    answer = int(answer)
+    if answer % 30 != 0:
+        answer = -1
 
-    if txt % 3 != 0:
-        print(-1)
-    else:
-        for i in sorted(N, reverse=True):
-            print(i, end='')
+print(answer)
