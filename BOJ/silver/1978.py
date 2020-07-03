@@ -4,18 +4,20 @@ N = int(input())
 numbers = list(map(int, input().split()))
 cnt = 0
 
+
+def prime(num):
+    if num < 2:
+        return False
+    for i in range(2, num):
+        if i * i > num:
+            break
+        elif num % i == 0:
+            return False
+    return True
+
+
 for i in numbers:
-    divide = False
-    if i == 1:
-        continue
-    elif i == 2:
-        pass
-    else:
-        for j in range(2, i):
-            if i % j == 0:
-                divide = True
-                break
-    if not divide:
+    if prime(i):
         cnt += 1
 
 print(cnt)
