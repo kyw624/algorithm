@@ -25,15 +25,10 @@ def solution(num, arr):
 
 
 T = int(input())
-input_list = []
-
-for _ in range(T):
-    input_list.append(int(input()))
-
-MAX_NUM = max(input_list)
+INPUT_LIST = [int(input()) for _ in range(T)]
+MAX_NUM = max(INPUT_LIST)
 PRIME = prime_check(MAX_NUM)
 
 for i in range(T):
-    answer = solution(input_list[i], PRIME)
-    print(answer[0], end=' ')
-    print(answer[1])
+    answer = solution(INPUT_LIST[i], PRIME)
+    print(" ".join(map(str, answer)))
