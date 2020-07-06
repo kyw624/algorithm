@@ -7,16 +7,14 @@ temp = list(person)
 answer = []
 idx = 0
 
-while len(temp) > 0:
+for _ in range(N):
     length = len(temp)
-    for _ in range(K - 1):
-        if idx >= length:
-            idx = 0
-        idx += 1
-        if idx >= length:
-            idx = 0
+    idx += K - 1
+    if idx >= length:
+        idx %= length
     current = temp[idx]
     answer.append(current)
     temp.remove(current)
+
 
 print("<" + ", ".join(map(str, answer)) + ">")
