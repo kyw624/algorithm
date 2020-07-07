@@ -1,6 +1,7 @@
 # 균형잡힌 세상
 
 answer = []
+sign = {')': '(', ']': '['}
 
 while True:
     str_ = input()
@@ -9,31 +10,24 @@ while True:
     prev = []
     check = True
     for i in str_:
-        if i in ('(', '['):
+        if i in sign.values():
             prev.append(i)
-        elif i in (')', ']'):
-            if not prev:
+        elif i in sign.keys():
+            if prev:
+                if prev[-1] == sign[i]:
+                    prev.pop()
+                else:
+                    check = False
+            else:
                 check = False
                 break
-            elif i == ')':
-                if prev[-1] == '(':
-                    prev.pop()
-                else:
-                    check = False
-                    break
-            elif i == ']':
-                if prev[-1] == '[':
-                    prev.pop()
-                else:
-                    check = False
-                    break
-    if not prev:
+    if prev:
+        answer.append('no')
+    else:
         if check:
             answer.append('yes')
         else:
             answer.append('no')
-    else:
-        answer.append('no')
 
 for i in answer:
     print(i)
