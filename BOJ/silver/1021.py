@@ -4,39 +4,32 @@ def shift(arr):
     return arr.pop(0)
 
 
-def left_move(arr, cnt):
-    for _ in range(cnt):
-        arr.append(shift(arr))
-    return shift(arr)
-
-
-def right_move(arr, cnt):
-    for _ in range(cnt):
-        arr.insert(0, arr.pop())
-    return shift(arr)
-
-
-def check(arr, num):
-    left = arr.index(num)
-    right = len(arr) - left
-    if left <= right:
-        left_move(arr, left)
-        distance = left
+def rotate(arr, cnt, dir):
+    if dir == 'left':
+        for _ in range(cnt):
+            arr.append(shift(arr))
     else:
-        right_move(arr, right)
-        distance = right
-    return distance
+        for _ in range(cnt):
+            arr.insert(0, arr.pop())
 
 
 N, M = map(int, input().split())
 INDEX_LIST = list(map(int, input().split()))
+
 queue = [i + 1 for i in range(N)]
 move = 0
 
 for i in INDEX_LIST:
-    if queue.index(i) == 0:
-        shift(queue)
-    else:
-        move = move + check(queue, i)
+    idx = queue.index(i)
+    if idx != 0:
+        left = idx
+        right = len(queue) - idx
+        if left <= right:
+            distance, direction = left, 'left'
+        else:
+            distance, direction = right, 'right'
+        rotate(queue, distance, direction)
+        move += distance
+    shift(queue)
 
 print(move)
