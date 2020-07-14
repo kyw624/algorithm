@@ -36,3 +36,5 @@ answer[1] = bfs(V)
 
 print(' '.join(map(str, answer[0])))
 print(' '.join(map(str, answer[1])))
+# print(*dfs(V, matrix, []))
+# print(*bfs(V))
