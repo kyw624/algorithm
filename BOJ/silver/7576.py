@@ -3,66 +3,40 @@
 from collections import deque
 
 
-def zero_check(matrix):
-    flag = False
-    for i in matrix:
-        if 0 in i:
-            flag = True
-    if flag:
-        return True
-    return False
-
-
-def idx_check(x, y, matrix):
-    for i in range(y):
-        for j in range(x):
-            if matrix[i][j] == 1:
-                dq.append([i, j])
-
-
-def bfs(x, y, matrix):
-    dy = [-1, 1, 0, 0]
-    dx = [0, 0, -1, 1]
-    visited = [[0] * x for _ in range(y)]
-    dist = [[0] * x for _ in range(y)]
-    for i in range(y):
-        for j in range(x):
-            if MATRIX[i][j] == -1:
-                dist[i][j] = -1
-    for i in dq:
-        dist[i[0]][i[1]] = 1
+def bfs():
     while dq:
         row, col = dq.popleft()
-        if visited[row][col]:
-            continue
-        visited[row][col] = 1
         for i in range(4):
             ny = row + dy[i]
             nx = col + dx[i]
-            if nx < 0 or ny < 0 or nx > x - 1 or ny > y - 1:
+            if nx < 0 or ny < 0 or nx >= M or ny >= N:
                 continue
-            if visited[ny][nx]:
+            if matrix[ny][nx]:
                 continue
-            if matrix[ny][nx] == 0:
-                dq.append([ny, nx])
-                dist[ny][nx] = dist[row][col] + 1
-    return dist
+            matrix[ny][nx] = matrix[row][col] + 1
+            dq.append([ny, nx])
 
 
 M, N = map(int, input().split())
-MATRIX = [list(map(int, input().split())) for _ in range(N)]
+matrix = []
+
+dy = [-1, 1, 0, 0]
+dx = [0, 0, -1, 1]
 dq = deque()
 
-if not zero_check(MATRIX):
-    print(0)
-else:
-    idx_check(M, N, MATRIX)
-    result = bfs(M, N, MATRIX)
-    if zero_check(result):
+for i in range(N):
+    matrix.append(list(map(int, input().split())))
+    for j in range(M):
+        if matrix[i][j] == 1:
+            dq.append([i, j])
+
+bfs()
+_max = 0
+
+for i in range(N):
+    if 0 in matrix[i]:
         print(-1)
-    else:
-        _max = 0
-        for i in result:
-            if max(i) > _max:
-                _max = max(i)
-        print(_max - 1)
+        break
+    _max = max(_max, max(matrix[i]))
+
+print(_max - 1)
