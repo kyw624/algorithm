@@ -38,5 +38,5 @@ for i in range(N):
         print(-1)
         break
     _max = max(_max, max(matrix[i]))
-
-print(_max - 1)
+    if i == N - 1:
+        print(_max - 1)
