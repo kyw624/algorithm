@@ -4,37 +4,32 @@
 from collections import deque
 
 
-def bfs(start, visited):
+def bfs(start):
     queue = deque([start])
-    visited[start] = 1
     while queue:
         node = queue.popleft()
         for i in edge_list[node]:
-            if not visited[i]:
+            if not distance[i]:
                 queue.append(i)
-                visited[i] = 1
                 distance[i] = distance[node] + 1
 
 
 N, M, K, X = map(int, input().split())
 
 edge_list = [[] for _ in range(N + 1)]
-visited = [0] * (N + 1)
 distance = [0] * (N + 1)
-result = []
+check = False
 
 for _ in range(M):
     a, b = map(int, input().split())
     edge_list[a].append(b)
 
-bfs(X, visited)
+bfs(X)
 
 for i in range(1, N + 1):
     if distance[i] == K:
-        result.append(i)
-
-if result:
-    for i in sorted(result):
         print(i)
-else:
+        check = True
+
+if check == False:
     print(-1)
