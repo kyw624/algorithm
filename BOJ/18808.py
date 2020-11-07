@@ -35,8 +35,6 @@ for _ in range(K):
         sticker.append(list(map(int, input().split())))
     cnt = 0
     while cnt < 4:
-        r = len(sticker)
-        c = len(sticker[0])
         isAttach = False
         for i in range(N - r + 1):
             if isAttach:
@@ -48,6 +46,7 @@ for _ in range(K):
         if isAttach:
             break
         sticker = rotate(sticker)
+        r, c = c, r
         cnt += 1
 
 print(acc)
