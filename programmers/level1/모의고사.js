@@ -25,7 +25,7 @@ function solution(answers) {
     if (third[i % len3] === answers[i]) count[2]++;
   }
 
-  const max = Math.max.apply(null, count);
+  const max = Math.max(...count);
 
   for (let i = 0; i < 3; i++) {
     if (count[i] === max) result.push(i + 1);
