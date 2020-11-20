@@ -11,22 +11,14 @@
 */
 
 function solution(array, commands) {
-  const result = [];
-
-  for (let current = 0; current < commands.length; current++) {
-    const i = commands[current][0];
-    const j = commands[current][1];
-    const k = commands[current][2];
+  return commands.map((current) => {
+    const [i, j, k] = current;
     const tmp = array
-      .filter((value, index) => {
-        if (index >= i - 1 && index < j) return value;
-      })
+      .filter((value, index) => index >= i - 1 && index <= j - 1)
       .sort((a, b) => a - b);
 
-    result.push(tmp[k - 1]);
-  }
-
-  return result;
+    return tmp[k - 1];
+  });
 }
 
 solution(
