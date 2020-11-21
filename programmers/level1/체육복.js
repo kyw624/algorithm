@@ -19,30 +19,27 @@
 
 function solution(n, lost, reserve) {
   let answer = 0;
-  const isHave = new Array(n + 1); // 학생번호별 체육복 보유 여부
-  isHave.fill(-1);
-  const tmp = []; // 여벌이 있으면서 잃어버린 학생번호
+  const isHave = new Array(n + 1).fill(-1); // 학생번호별 체육복 보유 여부
 
   // isHave 초기화
   for (let i = 0; i < n; i++) {
     const current = i + 1;
+    const lostIndex = lost.indexOf(current);
+    const reserveIndex = reserve.indexOf(current);
 
-    if (lost.indexOf(current) === -1) {
+    if (lostIndex === -1) {
       // 잃어버리지 않은 학생
       isHave[current] = 1;
-    } else if (reserve.indexOf(current) !== -1) {
+    } else if (reserveIndex !== -1) {
       // 잃어버렸지만 여벌이 있는 학생
       isHave[current] = 1;
-      tmp.push(current);
+
+      // lost, reserve 배열 업데이트
+      lost.splice(lostIndex, 1);
+      reserve.splice(reserveIndex, 1);
     } else {
       isHave[current] = 0;
     }
-  }
-
-  // lost, reserve 배열 업데이트
-  for (let i = 0; i < tmp.length; i++) {
-    lost.splice(lost.indexOf(tmp[i]), 1);
-    reserve.splice(reserve.indexOf(tmp[i]), 1);
   }
 
   for (let i = 0; i < lost.length; i++) {
@@ -53,6 +50,7 @@ function solution(n, lost, reserve) {
       const front = reserve.indexOf(lost[i] - 1);
       const back = reserve.indexOf(lost[i] + 1);
 
+      // 전, 후 확인하며 isHave 업데이트
       if (front !== -1) {
         isHave[lost[i]] = 1;
         reserve.splice(front, 1);
