@@ -16,28 +16,18 @@
 */
 
 function solution(progresses, speeds) {
-  const copyProgresses = [...progresses];
-  const copySpeeds = [...speeds];
-  const length = copyProgresses.length;
-  const result = [];
-  let index = 0;
+  let result = [0];
+  let days = progresses.map((work, index) =>
+    Math.ceil((100 - work) / speeds[index])
+  );
+  let baseDay = days[0];
 
-  while (index < length) {
-    let count = 0;
-
-    for (let i = index; i < length; i++) {
-      if (copyProgresses[i] < 100) copyProgresses[i] += copySpeeds[i];
+  for (let i = 0, j = 0; i < days.length; i++) {
+    if (days[i] <= baseDay) result[j] += 1;
+    else {
+      baseDay = days[i];
+      result[++j] = 1;
     }
-
-    for (let i = index; i < length; i++) {
-      if (copyProgresses[i] < 100) break;
-      else {
-        index = i + 1;
-        count++;
-      }
-    }
-
-    if (count !== 0) result.push(count);
   }
 
   return result;
@@ -46,5 +36,3 @@ function solution(progresses, speeds) {
 console.log(solution([93, 30, 55], [1, 30, 5])); // [2, 1]
 console.log(solution([95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1])); // [1, 3, 2]
 console.log(solution([96, 99, 98, 97], [1, 1, 1, 1])); // [4]
-
-[4, 1, 2, 3];
