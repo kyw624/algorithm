@@ -13,24 +13,19 @@
 */
 
 function solution(land) {
-  const dp = [];
+  const result = [...land].reduce(
+    (acc, cur) => {
+      return [
+        cur[0] + Math.max(acc[1], acc[2], acc[3]),
+        cur[1] + Math.max(acc[0], acc[2], acc[3]),
+        cur[2] + Math.max(acc[0], acc[1], acc[3]),
+        cur[3] + Math.max(acc[0], acc[1], acc[2]),
+      ];
+    },
+    [0, 0, 0, 0]
+  );
 
-  for (let i = 0; i <= land.length; i++) {
-    dp.push([0, 0, 0, 0]);
-  }
-
-  for (let i = 1; i < land.length + 1; i++) {
-    dp[i][0] =
-      land[i - 1][0] + Math.max(dp[i - 1][1], dp[i - 1][2], dp[i - 1][3]);
-    dp[i][1] =
-      land[i - 1][1] + Math.max(dp[i - 1][0], dp[i - 1][2], dp[i - 1][3]);
-    dp[i][2] =
-      land[i - 1][2] + Math.max(dp[i - 1][0], dp[i - 1][1], dp[i - 1][3]);
-    dp[i][3] =
-      land[i - 1][3] + Math.max(dp[i - 1][0], dp[i - 1][1], dp[i - 1][2]);
-  }
-
-  return Math.max.apply(null, dp[dp.length - 1]);
+  return Math.max.apply(null, result);
 }
 
 console.log(
