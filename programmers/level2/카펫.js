@@ -20,14 +20,9 @@ function solution(brown, yellow) {
     if (total % i === 0) {
       const border = (total / i + i) * 2 - 4;
 
-      if (border === brown) {
-        answer = [total / i, i];
-        break;
-      }
+      if (border === brown) return [total / i, i];
     }
   }
-
-  return answer;
 }
 
 console.log(solution(10, 2)); // [4, 3]
