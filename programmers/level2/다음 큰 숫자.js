@@ -11,29 +11,15 @@
 */
 
 function solution(n) {
-  const binary = n.toString(2);
-  const cnt = count(binary);
+  const cnt = n.toString(2).match(/1/g).length;
   let num = n + 1;
 
   while (true) {
-    const currentBinary = num.toString(2);
-    const currentCnt = count(currentBinary);
-
-    if (cnt === currentCnt) return num;
+    if (cnt === num.toString(2).match(/1/g).length) return num;
 
     num++;
   }
 }
-
-const count = (target) => {
-  let cnt = 0;
-
-  [...target].forEach((digit) => {
-    if (digit === "1") cnt++;
-  });
-
-  return cnt;
-};
 
 console.log(solution(78)); // 83
 console.log(solution(15)); // 23
