@@ -25,15 +25,9 @@
 */
 
 function solution(s) {
-  const setToArray = s
-    .split("},{")
-    .map((str) => {
-      return str
-        .match(/[0-9+\,]+/)[0]
-        .split(",")
-        .map((val) => parseInt(val));
-    })
-    .sort((a, b) => a.length - b.length);
+  const setToArray = JSON.parse(s.replace(/{/g, "[").replace(/}/g, "]")).sort(
+    (a, b) => a.length - b.length
+  );
 
   const answer = [];
 
