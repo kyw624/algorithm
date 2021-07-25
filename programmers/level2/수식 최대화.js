@@ -20,7 +20,7 @@
 function solution(expression) {
   const NUM_ARRAY = expression.match(/\d+/g);
   const OPER_ARRAY = expression.match(/\D+/g);
-  const OPER_SET = new Set(OPER_ARRAY);
+  const OPER_SET = new Set([...OPER_ARRAY]);
   const cases = permutation(Array.from(OPER_SET), OPER_SET.size);
   const answer = [];
 
@@ -46,7 +46,7 @@ function solution(expression) {
     answer.push(Math.abs(nums[0]));
   }
 
-  return Math.max.apply(null, answer);
+  return Math.max(...answer);
 }
 
 function permutation(arr, selectNum) {
