@@ -134,3 +134,68 @@ ll.clearList();
 
 ll.printListData(ll);
 // ll.getAt(3);
+
+////
+// Floyd 알고리즘 예제
+
+// 끝이 null인 연결 리스트
+function makeNormalList() {
+  const list = new LinkedList();
+
+  for (let i = 1; i <= 8; i++) {
+    list.insertLast(i);
+  }
+
+  return list;
+}
+
+// 사이클이 있는 연결 리스트
+function makeCycleList() {
+  const list = new LinkedList();
+
+  for (let i = 1; i <= 8; i++) {
+    list.insertLast(i);
+  }
+
+  let current = list.head;
+  let target;
+
+  while (current) {
+    if (current.data === 5) {
+      target = current;
+    }
+
+    if (current.next === null) {
+      current.next = target;
+      break;
+    }
+
+    current = current.next;
+  }
+
+  return list;
+}
+
+// floyd 알고리즘 예제
+function floyd(list) {
+  let fast = list.head;
+  let slow = list.head;
+
+  while (fast && fast.next) {
+    fast = fast.next.next;
+    slow = slow.next;
+
+    if (fast === slow) {
+      // 사이클 존재
+      return true;
+    }
+  }
+
+  return false;
+}
+
+const normalList = makeNormalList();
+const cycleList = makeCycleList();
+
+console.log(floyd(normalList));
+console.log(floyd(cycleList));
