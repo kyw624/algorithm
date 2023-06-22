@@ -1,3 +1,5 @@
+// 1406 - 에디터
+
 const [input, count, ...command] = require("fs")
   .readFileSync("./input.txt")
   .toString()
