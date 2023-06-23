@@ -13,58 +13,103 @@
   - 주어진 판의 정보로 몇 개의 블록이 지워질지 리턴.
 */
 
+/**
+ *
+ * @param {number} m - 높이
+ * @param {number} n - 너비
+ * @param {string[]} board - [row, row, ...] 형태의 1차원 배열
+ */
 function solution(m, n, board) {
-  const newBoard = [...board].map((str) => str.split(""));
+  let answer = 0;
+  const newBoard = board.map((v) => v.split(""));
 
   while (true) {
-    const store = [];
+    const target = search(m, n, newBoard);
 
-    for (let i = 0; i < m - 1; i++) {
-      for (let j = 0; j < n - 1; j++) {
-        const current = newBoard[i][j];
+    if (target.length === 0) {
+      break;
+    }
 
-        if (
-          current !== 0 &&
-          current === newBoard[i][j + 1] &&
-          current === newBoard[i + 1][j] &&
-          current === newBoard[i + 1][j + 1]
-        ) {
-          store.push([i, j]);
-        }
+    breakBlocks(target, newBoard);
+    reArrange(m, n, newBoard);
+  }
+
+  return newBoard.reduce(
+    (total, current) => total + current.filter((v) => v === 0).length,
+    0
+  );
+}
+
+// 깨질 블록 탐색
+function search(h, w, matrix) {
+  // console.log("function: [ search ]");
+
+  const store = [];
+
+  for (let i = 0; i < h - 1; i++) {
+    for (let j = 0; j < w - 1; j++) {
+      const current = matrix[i][j];
+
+      if (
+        current !== 0 &&
+        current === matrix[i][j + 1] &&
+        current === matrix[i + 1][j] &&
+        current === matrix[i + 1][j + 1]
+      ) {
+        store.push([i, j]);
       }
     }
+  }
 
-    if (store.length === 0) {
-      return [].concat(...newBoard).filter((value) => value === 0).length;
-    }
+  return store;
+}
 
-    for (let i = 0; i < store.length; i++) {
-      const y = store[i][0];
-      const x = store[i][1];
+// 대상 블록 부수기
+function breakBlocks(location, matrix) {
+  // console.log("function: [ breakBlocks ]");
 
-      newBoard[y][x] = 0;
-      newBoard[y][x + 1] = 0;
-      newBoard[y + 1][x] = 0;
-      newBoard[y + 1][x + 1] = 0;
-    }
+  location.forEach(([y, x]) => {
+    matrix[y][x] = 0;
+    matrix[y + 1][x] = 0;
+    matrix[y][x + 1] = 0;
+    matrix[y + 1][x + 1] = 0;
+  });
+}
 
-    for (let row = m - 1; row >= 0; row--) {
-      if (newBoard[row].indexOf(0) === -1) continue;
+// 블록 부순 뒤 재배열
+function reArrange(h, w, matrix) {
+  // 맨 아랫줄부터 0 찾으면 그 위로 올라가며 재배열
+  // 맨 윗줄은 X
+  for (let currentRow = h - 1; currentRow > 0; currentRow--) {
+    const targetColumns = matrix[currentRow]
+      .map((v, i) => {
+        if (v === 0) {
+          return i;
+        }
+      })
+      .filter((v) => v !== undefined);
 
-      for (let col = 0; col < n; col++) {
-        for (let cur = row - 1; cur >= 0 && newBoard[row][col] === 0; cur--) {
-          if (newBoard[cur][col]) {
-            newBoard[row][col] = newBoard[cur][col];
-            newBoard[cur][col] = 0;
+    if (targetColumns.length > 0) {
+      targetColumns.forEach((col) => {
+        for (let row = currentRow - 1; row >= 0; row--) {
+          if (matrix[row][col]) {
+            matrix[currentRow][col] = matrix[row][col];
+            matrix[row][col] = 0;
             break;
           }
         }
-      }
+      });
     }
   }
 }
 
-console.log(solution(4, 5, ["CCBDE", "AAADE", "AAABF", "CCBBF"])); // 14
-console.log(
-  solution(6, 6, ["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"])
-); // 15
+const inputs = [
+  [4, 5, ["CCBDE", "AAADE", "AAABF", "CCBBF"]], // 14
+  [6, 6, ["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"]], // 15
+];
+
+inputs.forEach((input, i) => {
+  console.log(`${i + 1}번째 입력`);
+  console.log(solution(...input));
+  console.log();
+});
