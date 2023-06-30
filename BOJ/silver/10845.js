@@ -9,7 +9,6 @@ const [n, ...inputs] = require("fs")
 
 const cmd = {
   push: (num) => (queue[tail++] = num),
-
   pop: () => (tail === head ? -1 : queue[head++]),
   size: () => tail - head,
   empty: () => (head === tail ? 1 : 0),
