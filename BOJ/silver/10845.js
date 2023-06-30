@@ -1,0 +1,36 @@
+// 큐
+
+const [n, ...inputs] = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split("\n")
+  .map((input) => input.replace("\r", ""));
+
+const cmd = {
+  push: (num) => (queue[tail++] = num),
+
+  pop: () => (tail === head ? -1 : queue[head++]),
+  size: () => tail - head,
+  empty: () => (head === tail ? 1 : 0),
+  front: () => (tail === head ? -1 : queue[head]),
+  back: () => (tail === head ? -1 : queue[tail - 1]),
+};
+
+const MAX = 100000;
+const queue = Array(MAX);
+let head = 0;
+let tail = 0;
+const answer = [];
+
+inputs.forEach((input) => {
+  const [current, target] = input.split(" ");
+
+  if (current === "push") {
+    cmd[current](Number(target));
+  } else {
+    answer.push(cmd[current]());
+  }
+});
+
+console.log(answer.join("\n"));
