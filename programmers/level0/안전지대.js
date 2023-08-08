@@ -7,8 +7,6 @@ function solution(board) {
   const dy = [-1, 0, 1];
   const dx = [-1, 0, 1];
 
-  let answer = 0;
-
   const getBombRange = (coord) => {
     const [y, x] = coord;
 
@@ -24,7 +22,6 @@ function solution(board) {
 
         if (newBoard[ny][nx] === 0) {
           newBoard[ny][nx] = -1;
-          answer++;
         }
       }
     }
