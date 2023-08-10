@@ -1,0 +1,79 @@
+// 10866 - 덱
+
+const fs = require("fs");
+const file = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
+const [N, ...commands] = fs.readFileSync(file).toString().trim().split("\n");
+
+class Deque {
+  constructor() {
+    this.data = [];
+    this.head = 0;
+    this.tail = 0;
+  }
+
+  empty() {
+    return this.size() === 0 ? 1 : 0;
+  }
+
+  size() {
+    return this.tail - this.head;
+  }
+
+  push_front(num) {
+    this.data = [num].concat(this.data.slice(this.head, this.tail++));
+  }
+
+  push_back(num) {
+    this.data[this.tail++] = num;
+  }
+
+  pop_front() {
+    if (this.size() === 0) return -1;
+
+    const popNumber = this.data[this.head];
+
+    this.data = this.data.slice(this.head + 1, this.tail--);
+
+    return popNumber;
+  }
+
+  pop_back() {
+    if (this.size() === 0) return -1;
+
+    const popNumber = this.data[this.tail - 1];
+
+    this.data = this.data.slice(this.head, --this.tail);
+
+    return popNumber;
+  }
+
+  front() {
+    if (this.size() === 0) return -1;
+
+    return this.data[this.head];
+  }
+
+  back() {
+    if (this.size() === 0) return -1;
+
+    return this.data[this.tail - 1];
+  }
+}
+
+const dq = new Deque();
+let answer = [];
+
+commands.forEach((command) => {
+  const [cmd, num] = command.trim().split(" ");
+  let res;
+
+  if (cmd.includes("push")) {
+    res = dq[cmd](num);
+  } else {
+    res = dq[cmd]();
+  }
+
+  if (res !== undefined) answer.push(res);
+});
+
+console.log(answer.join("\n"));
