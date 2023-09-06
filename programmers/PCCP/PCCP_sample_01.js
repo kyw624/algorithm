@@ -28,35 +28,30 @@
 */
 
 function solution(input_string) {
-  const alphabet = {};
-  const result = [];
-  const start = 'a'.charCodeAt();
-  const end = 'z'.charCodeAt();
+  // 각 알파벳 등장 수 체크
+  const alphabets = {};
 
-  for (let i = start; i <= end; i++) {
-    alphabet[String.fromCharCode(i)] = 0;
-  }
-
-  for (let i = 0; i < input_string.length; i++) {
-    const currentChar = input_string.charAt(i);
-
-    if (alphabet[currentChar] === -1) {
-      continue;
-    } else if (alphabet[currentChar] === 0) {
-      alphabet[currentChar] += 1;
+  [...input_string].forEach((char) => {
+    if (alphabets.hasOwnProperty(char)) {
+      alphabets[char]++;
     } else {
-      const prevChar = input_string.charAt(i - 1);
-
-      if (prevChar === currentChar) {
-        alphabet[currentChar] += 1;
-      } else {
-        result.push(currentChar);
-        alphabet[currentChar] = -1;
-      }
+      alphabets[char] = 1;
     }
-  }
+  });
 
-  return result.sort().length === 0 ? 'N' : result.join('');
+  const result = Object.entries(alphabets).sort();
+
+  let answer = '';
+
+  result.forEach(([key, value]) => {
+    const target = key.repeat(value);
+
+    if (input_string.split(target).length === 1) {
+      answer += key;
+    }
+  });
+
+  return answer.length === 0 ? 'N' : answer;
 }
 
 console.log(solution('edeaaabbccd')); // "de"
