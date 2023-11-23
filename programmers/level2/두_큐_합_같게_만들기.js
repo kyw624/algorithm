@@ -40,6 +40,40 @@ function solution(queue1, queue2) {
   return count;
 }
 
+// 투 포인터 풀이
+function solution2(queue1, queue2) {
+  let summedQueue1 = queue1.reduce((acc, cur) => acc + cur);
+  let summedQueue2 = queue2.reduce((acc, cur) => acc + cur);
+
+  const maxTries = 4 * (queue1.length + queue2.length);
+  const half = (summedQueue1 + summedQueue2) / 2;
+  const mergedQueue = [...queue1, ...queue2];
+
+  if (!Number.isInteger(half)) {
+    return -1;
+  }
+
+  let left = 0;
+  let right = queue1.length;
+  let count = 0;
+
+  while (count < maxTries) {
+    if (summedQueue1 === half) {
+      return count;
+    }
+
+    if (summedQueue1 > half) {
+      summedQueue1 -= mergedQueue[left++];
+    } else {
+      summedQueue1 += mergedQueue[right++];
+    }
+
+    count += 1;
+  }
+
+  return -1;
+}
+
 const inputs = [
   [
     [3, 2, 7, 2],
@@ -57,6 +91,6 @@ const inputs = [
 const answers = [2, 7, -1];
 
 inputs.forEach((input, index) => {
-  const answer = solution(...input);
+  const answer = solution2(...input);
   console.log(answer === answers[index], answer);
 });
